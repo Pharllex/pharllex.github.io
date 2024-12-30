@@ -21,9 +21,22 @@
         }
 
         .text-container {
-            font-size: 3vh;
+            color: black;
+            font-size: 5vh;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            line-height: 1.5;
+            transition: all 0.5s;
+        }
+
+        .text-container:hover {
+            color: white;
+            font-size: 5vh;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
             line-height: 1.5;
             text-shadow: 0px 2px 5px white;
+            transition: all 0.5s;
         }
     </style>
 </head>
@@ -31,7 +44,7 @@
     <div class="text-container" id="textContainer">Loading...</div>
 
     <script>
-        const rawFileUrl = "";
+        const rawFileUrl = "https://raw.githubusercontent.com/xn-devs/xn-devs.github.io/refs/heads/main/extension";
 
         async function fetchRawText(url) {
             try {
