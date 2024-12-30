@@ -4,51 +4,49 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XN</title>
+    <title>Text Loader</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
             overflow: hidden;
-        }
-
-        .h1 {
-            position: absolute;
-            top: 10px; 
-            left: 35px; 
             color: white;
-            font-size: 5vh; 
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            text-align: center;
+        }
+
+        .text-container {
+            font-size: 3vh;
+            line-height: 1.5;
             text-shadow: 0px 2px 5px white;
-            transition: text-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        .h1:hover {
-            text-shadow: 0px 0px 15px white; 
-            transform: scale(1.05); 
-        }
-
-        .s1 {
-            position: absolute;
-            top: 50px; 
-            left: 35px; 
-            color: white;
-            font-size: 3vh; 
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            text-shadow: 0px 2px 5px white;
-            transition: text-shadow 0.3s ease, transform 0.3s ease;
-        }
-
-        .s1:hover {
-            text-shadow: 0px 0px 15px white; 
-            transform: scale(1.05); 
         }
     </style>
 </head>
 <body>
-    <div class="h1">XN</div>
-    <div class="s1">Best Gaming Utility</div>
+    <div class="text-container" id="textContainer">Loading...</div>
+
+    <script>
+        const rawFileUrl = "";
+
+        async function fetchRawText(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const text = await response.text();
+                document.getElementById("textContainer").textContent = text;
+            } catch (error) {
+                document.getElementById("textContainer").textContent = "Failed to load text.";
+            }
+        }
+
+        fetchRawText(rawFileUrl);
+    </script>
 </body>
 </html>
