@@ -30,7 +30,7 @@
             text-shadow: 0px 0px 5px white;
         }
 
-        .text-container:hover {
+        .text-container.green {
             color: green;
             text-shadow: 0px 2px 5px green;
         }
@@ -52,9 +52,9 @@
     <script>
         let isGenerating = false;
         let interval;
+        let isGreen = false;
 
         function generateUUID() {
-            //return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
@@ -65,21 +65,34 @@
             const textContainer = document.getElementById("textContainer");
 
             if (!isGenerating) {
-                // Start generating UUIDs
                 isGenerating = true;
                 textContainer.textContent = generateUUID();
                 interval = setInterval(() => {
                     textContainer.textContent = generateUUID();
                 }, 50);
             } else {
-                // Stop generating UUIDs
                 isGenerating = false;
                 clearInterval(interval);
                 textContainer.textContent = generateUUID();
             }
         }
 
+        function toggleGreen(event) {
+            event.preventDefault(); // Prevent the context menu for right-click
+
+            // Toggle the green color
+            const textContainer = document.getElementById("textContainer");
+            isGreen = !isGreen;
+            textContainer.classList.toggle("green", isGreen);
+        }
+
+        // Event listeners for both click (left) and dblclick (mobile-friendly double-click)
         document.getElementById("textContainer").addEventListener("click", toggleUUIDGeneration);
+        document.getElementById("textContainer").addEventListener("dblclick", toggleGreen); // Double-click to toggle green
+
+        // Right-click (contextmenu) for desktop
+        document.getElementById("textContainer").addEventListener("contextmenu", toggleGreen);
+
         document.getElementById("textContainer").textContent = generateUUID();
     </script>
 </body>
