@@ -26,7 +26,8 @@
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
             line-height: 1.5;
-            transition: all 0.2s;
+            transition: all 0.5s;
+            cursor: pointer;
         }
 
         .text-container:hover {
@@ -46,9 +47,12 @@
     </style>
 </head>
 <body>
-    <div class="text-container" id="textContainer">Hover to generate UUID</div>
+    <div class="text-container" id="textContainer"></div>
 
     <script>
+        let isGenerating = false;
+        let interval;
+
         function generateUUID() {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                 const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -56,11 +60,26 @@
             });
         }
 
-        const textContainer = document.getElementById("textContainer");
+        function toggleUUIDGeneration() {
+            const textContainer = document.getElementById("textContainer");
 
-        textContainer.addEventListener("mouseover", () => {
-            textContainer.textContent = generateUUID();
-        });
+            if (!isGenerating) {
+                // Start generating UUIDs
+                isGenerating = true;
+                textContainer.textContent = generateUUID();
+                interval = setInterval(() => {
+                    textContainer.textContent = generateUUID();
+                }, 50);
+            } else {
+                // Stop generating UUIDs
+                isGenerating = false;
+                clearInterval(interval);
+                textContainer.textContent = generateUUID();
+            }
+        }
+
+        document.getElementById("textContainer").addEventListener("click", toggleUUIDGeneration);
+        document.getElementById("textContainer").textContent = generateUUID();
     </script>
 </body>
 </html>
