@@ -54,22 +54,14 @@
     <div class="text-container" id="textContainer">Loading...</div>
 
     <script>
-        const rawFileUrl = "https://raw.githubusercontent.com/xn-devs/xn-devs.github.io/refs/heads/main/extension";
-
-        async function fetchRawText(url) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const text = await response.text();
-                document.getElementById("textContainer").textContent = text;
-            } catch (error) {
-                document.getElementById("textContainer").textContent = "Failed to load text.";
-            }
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
         }
 
-        fetchRawText(rawFileUrl);
+        document.getElementById("textContainer").textContent = generateUUID();
     </script>
 </body>
 </html>
