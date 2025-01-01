@@ -3,128 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Circle</title>
+    <title>Gradient Glow Effect</title>
     <style>
         body {
-            background-color: black;
-            color: white;
-            font-family: 'Segoe UI', Ubuntu, Sans-Serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
+            height: 100vh;
+            background-color: black;
         }
 
-        .header {
-            font-weight: 600;
-            font-size: 18px;
-            animation: fadeIn 0.8s ease-in-out forwards;
-        }
-
-        @supports (-moz-appearance: auto) {
-            .header {
-                font-size: 15.5px;
-            }
-        }
-
-        .stat {
-            font-weight: 600;
-            font-size: 14px;
-            color: #9f9f9f;
-            margin: 10px 0;
-        }
-
-        @supports (-moz-appearance: auto) {
-            .stat {
-                font-size: 12px;
-            }
-        }
-
-        .rank-text {
-            font-weight: 800;
-            font-size: 24px;
-            color: #9f9f9f;
-            animation: scaleIn 0.3s ease-in-out forwards;
-        }
-
-        .circle-container {
-            margin-top: 20px;
+        .head {
             position: relative;
+            top: 10px;
+            left: 10px;
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(25deg, #9CECFB, #65C7F7, #0052D4);
+            border-radius: 5px;
+            transition: all 0.4s;
         }
 
-        .percentage-text {
+        .head::before {
+            content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-            font-weight: bold;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 10px;
+            background: linear-gradient(25deg, #9CECFB, #65C7F7, #0052D4);
+            filter: blur(10px);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .head:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .head:hover .hlabel {
             color: white;
         }
 
-        .rank-circle-rim {
-            stroke: #fff;
-            fill: none;
-            stroke-width: 6;
-            opacity: 0.2;
-        }
-
-        .rank-circle {
-            stroke: #fff;
-            stroke-dasharray: 300.6;
-            fill: none;
-            stroke-width: 6;
-            stroke-linecap: round;
-            opacity: 0.8;
-            transform-origin: 50% 50%;
-            transform: rotate(-90deg);
-            animation: progressAnimation 1s forwards ease-in-out;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes scaleIn {
-            from {
-                transform: scale(0);
-            }
-            to {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes progressAnimation {
-            from {
-                stroke-dashoffset: 300.6;
-            }
-            to {
-                stroke-dashoffset: 200.6;
-            }
+        .hlabel {
+            position: absolute;
+            top: 35px;
+            left: 55px;
+            /*left: 42px;*/
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 25px;
+            color: black; /* Default text color */
+            transition: color 0.4s;
         }
     </style>
 </head>
 <body>
-    <div class="header"></div>
-
-    <div class="stat"></div>
-
-    <div class="rank-text"></div>
-
-    <div class="circle-container">
-        <svg width="200" height="200">
-            <circle class="rank-circle-rim" cx="100" cy="100" r="90"></circle>
-            <circle class="rank-circle" cx="100" cy="100" r="90"></circle>
-        </svg>
-        <div class="percentage-text">Testing</div>
+    <div class="head">
+        <label class="hlabel"><b>Testing</b></label>
+        <!-- <label class="hlabel"><b>Welcome</b></label> -->
     </div>
 </body>
 </html>
