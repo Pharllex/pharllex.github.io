@@ -2,98 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Animated Circle and Percentage</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             background-color: black;
+            color: white;
+            font-family: 'Segoe UI', Ubuntu, Sans-Serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
-            overflow: hidden;
-            color: white;
-            font-family: 'Trebuchet MS', Arial, sans-serif;
-            text-align: center;
+            margin: 0;
         }
 
-        .text-container {
-            color: white;
-            font-size: 5vh;
-            font-family: 'Courier New', Courier, monospace;
+        .header {
+            font-weight: 600;
+            font-size: 18px;
+            animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        @supports (-moz-appearance: auto) {
+            .header {
+                font-size: 15.5px;
+            }
+        }
+
+        .stat {
+            font-weight: 600;
+            font-size: 14px;
+            color: #9f9f9f;
+            margin: 10px 0;
+        }
+
+        @supports (-moz-appearance: auto) {
+            .stat {
+                font-size: 12px;
+            }
+        }
+
+        .rank-text {
+            font-weight: 800;
+            font-size: 24px;
+            color: #9f9f9f;
+            animation: scaleIn 0.3s ease-in-out forwards;
+        }
+
+        .circle-container {
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .percentage-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
             font-weight: bold;
-            line-height: 1.5;
-            transition: all 0.5s;
-            text-shadow: 0px 0px 5px white;
+            color: white;
         }
 
-        .text-container.green {
-            color: green;
-            text-shadow: 0px 2px 5px green;
+        .rank-circle-rim {
+            stroke: #fff;
+            fill: none;
+            stroke-width: 6;
+            opacity: 0.2;
         }
 
-        ::selection {
-            background-color: transparent;
-            color: transparent;
+        .rank-circle {
+            stroke: #fff;
+            stroke-dasharray: 300.6;
+            fill: none;
+            stroke-width: 6;
+            stroke-linecap: round;
+            opacity: 0.8;
+            transform-origin: 50% 50%;
+            transform: rotate(-90deg);
+            animation: progressAnimation 1s forwards ease-in-out;
         }
-        
-        ::-moz-selection {
-            background-color: transparent;
-            color: transparent;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes progressAnimation {
+            from {
+                stroke-dashoffset: 300.6;
+            }
+            to {
+                stroke-dashoffset: 200.6;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="text-container" id="textContainer"></div>
+    <div class="header"></div>
 
-    <script>
-        let isGenerating = false;
-        let interval;
-        let isGreen = false;
+    <div class="stat"></div>
 
-        function generateUUID() {
-            return 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-        }
+    <div class="rank-text"></div>
 
-        function toggleUUIDGeneration() {
-            const textContainer = document.getElementById("textContainer");
-
-            if (!isGenerating) {
-                isGenerating = true;
-                textContainer.textContent = generateUUID();
-                interval = setInterval(() => {
-                    textContainer.textContent = generateUUID();
-                }, 50);
-            } else {
-                isGenerating = false;
-                clearInterval(interval);
-                textContainer.textContent = generateUUID();
-            }
-        }
-
-        function toggleGreen(event) {
-            event.preventDefault(); // Prevent the context menu for right-click
-
-            // Toggle the green color
-            const textContainer = document.getElementById("textContainer");
-            isGreen = !isGreen;
-            textContainer.classList.toggle("green", isGreen);
-        }
-
-        // Event listeners for both click (left) and dblclick (mobile-friendly double-click)
-        document.getElementById("textContainer").addEventListener("click", toggleUUIDGeneration);
-        document.getElementById("textContainer").addEventListener("dblclick", toggleGreen); // Double-click to toggle green
-
-        // Right-click (contextmenu) for desktop
-        document.getElementById("textContainer").addEventListener("contextmenu", toggleGreen);
-
-        document.getElementById("textContainer").textContent = generateUUID();
-    </script>
+    <div class="circle-container">
+        <svg width="100" height="100">
+            <circle class="rank-circle-rim" cx="50" cy="50" r="45"></circle>
+            <circle class="rank-circle" cx="50" cy="50" r="45"></circle>
+        </svg>
+        <div class="percentage-text">Testing Site</div>
+    </div>
 </body>
 </html>
